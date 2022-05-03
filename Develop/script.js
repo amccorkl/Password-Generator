@@ -4,7 +4,7 @@ var generateBtn = document.querySelector("#generate");
 var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 var lowercase = "abcdefghijklmnopqrstuvwxyz".split("");
 var numbers = "1234567890".split("");
-var specialCharacters= "!@#$%^&*()<>?".split("");
+var specialCharacters = "!@#$%^&*()<>?".split("");
 
 //complete array of choices as confirmed by user
 var possibleChars = [];
@@ -20,16 +20,17 @@ function generatePassword() {
     var passwordLength = prompt("Please choose a number between 8-128");
     console.log(passwordLength);
     
-    if (passwordLength < 8 && passwordLength > 128) {
+    if (passwordLength < 8 || passwordLength > 128) {
       window.alert("Please choose a number between 8 and 128");
       return;
     }
 
     //validate at least 1 other character type
     // uppercase
-   var upperCase = confirm("Would you like to include uppercase letters?");
+   var upperCase = confirm("Would you like to include uppercase letters? Yes, click ok. No, click cancel.");
     if (upperCase) {
       possibleChars = possibleChars.concat(uppercase);
+      console.log(uppercase);
     }
   
     //lowercase
@@ -45,12 +46,14 @@ function generatePassword() {
     }
 
     //special character
-    var specials = confirm("Would you like ot include special characters?");
+    var specials = confirm("Would you like to include special characters?");
     if (specials) {
       possibleChars = possibleChars.concat(specialCharacters);
+      console.log(specialCharacters, specials, possibleChars);
     }
 
-    if (!upperCase || !lowerCase || !numeric || !specials) {
+    //if even 1 isn't chosen, this throws the choices off
+    if (!upperCase && !lowerCase && !numeric && !specials) {
       window.alert("You must choose one of the character types for your password. Please refresh the screen and restart.")
       return;
     }
@@ -58,12 +61,14 @@ function generatePassword() {
     //loop through confirmed characters with length limit
     for (var i = 0; i < passwordLength; i++) {
       var randomizedChoices = possibleChars[Math.floor(Math.random()* possibleChars.length)];
-        userChoices.push(randomizedChoices);
+      userChoices.push(randomizedChoices);
     }
+    //not all the chosen characters appear?????, only ","
+
 
     userChoices = userChoices.join("");
     console.log(userChoices);
-    return userChoices;
+    // return userChoices;
 }
 
 
